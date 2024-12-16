@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"os"
 
 	binance_connector "github.com/binance/binance-connector-go"
@@ -14,18 +16,18 @@ func main() {
 	// Initialise the client
 	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
 
-	// // Get balance of an asset
-	// balance, err := client.NewGetAccountService().Do(context.Background())
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-	// // fmt.Println(binance_connector.PrettyPrint(balance.Balances))
-	// for _, asset := range balance.Balances {
-	// 	if asset.Asset == "USDT" {
-	// 		fmt.Println(binance_connector.PrettyPrint(asset))
-	// 	}
-	// }
+	// Get balance of an asset
+	balance, err := client.NewGetAccountService().Do(context.Background())
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// fmt.Println(binance_connector.PrettyPrint(balance.Balances))
+	for _, asset := range balance.Balances {
+		if asset.Asset == "BNB" || asset.Asset == "USDT" {
+			fmt.Println(binance_connector.PrettyPrint(asset))
+		}
+	}
 
 	// // Get BNBUSDT ticker
 	// ticker, err := client.NewTickerService().Symbol("BNBUSDT").Do(context.Background())
@@ -35,10 +37,18 @@ func main() {
 	// }
 	// fmt.Println(binance_connector.PrettyPrint(ticker))
 
-	// // Create new order
+	// // Create BUY order
 	// newOrder, err := client.NewCreateOrderService().Symbol("BNBUSDT").
 	// 	Side("BUY").Type("MARKET").Quantity(1).
 	// 	Do(context.Background())
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
+	// fmt.Println(binance_connector.PrettyPrint(newOrder))
+
+	// // Create SELL order
+	// newOrder, err := client.NewCreateOrderService().Symbol("BNBUSDT").Side("SELL").Type("MARKET").Quantity(1).Do(context.Background())
 	// if err != nil {
 	// 	fmt.Println(err)
 	// 	return
