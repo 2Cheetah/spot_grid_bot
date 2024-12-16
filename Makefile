@@ -14,4 +14,4 @@ clean:
 	go clean
 
 run:
-	set -a; source .env; go run ./cmd/main.go; set +a
+	set -a; source .env; go run ./cmd/client/main.go; set +a
